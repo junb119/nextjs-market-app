@@ -1,6 +1,8 @@
 
 export default function Home() {
   return (
-    <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start"></main>
+    <main >
+      누구나 볼 수 있는 페이지입니다.
+    </main>
   );
 }
