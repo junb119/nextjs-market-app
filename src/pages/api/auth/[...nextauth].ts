@@ -25,7 +25,12 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
+        const user = {
+          id: "1",
+          name: "J Smith",
+          email: "jsmith@example.com",
+          role: "Admin",
+        };
 
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
@@ -41,6 +46,10 @@ export const authOptions: NextAuthOptions = {
   ],
   session: {
     strategy: "jwt",
+  },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    maxAge: 60 * 60 * 24 * 30, // 30days
   },
   callbacks: {
     async jwt({ token, user }) {
