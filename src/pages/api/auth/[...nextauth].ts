@@ -51,6 +51,9 @@ export const authOptions: NextAuthOptions = {
     secret: process.env.JWT_SECRET,
     maxAge: 60 * 60 * 24 * 30, // 30days
   },
+  pages:{
+    signIn : '/auth/login'
+  },
   callbacks: {
     async jwt({ token, user }) {
       console.log("token:", token);
