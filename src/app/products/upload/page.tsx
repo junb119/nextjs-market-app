@@ -1,5 +1,7 @@
 "use client";
 import Button from "@/components/Button";
+import { categories } from "@/components/categories/Categories";
+import CategoryInput from "@/components/categories/CategoryInput";
 import Container from "@/components/Container";
 import Heading from "@/components/Heading";
 import ImageUpload from "@/components/ImageUpload";
@@ -28,6 +30,7 @@ const ProductUploadPage = () => {
     },
   });
   const imageSrc = watch("imageSrc");
+  const category = watch("category");
   const onSubmit: SubmitHandler<FieldValues> = (data) => {};
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value);
@@ -70,7 +73,17 @@ const ProductUploadPage = () => {
           />
           <hr />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto">
-            {/* Category */}
+            {categories.map((item) => (
+              <div key={item.label} className="col-span-1">
+                <CategoryInput
+                  onClick={(category) => setCustomValue("category", category)}
+                  selected={category === item.path}
+                  label={item.label}
+                  icon={item.icon}
+                  path={item.path}
+                />
+              </div>
+            ))}
           </div>
           <hr />
           {/* kakaoMap */}
