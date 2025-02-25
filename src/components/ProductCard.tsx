@@ -26,7 +26,7 @@ const ProductCard = ({ data, currentUser }: ProductCardProps) => {
             alt="product"
           />
           <div className="absolute top-3 right-3">
-            <HeartButton productId={data.id} currentUser={currentUser} />
+            <HeartButton productId={data.id} currentUser={currentUser}  />
           </div>
         </div>
         <div className="text-lg font-semibold">{data.title}</div>
