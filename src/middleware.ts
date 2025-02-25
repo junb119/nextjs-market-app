@@ -5,8 +5,8 @@ export { default } from "next-auth/middleware";
 
 export async function middleware(req: NextRequest) {
   const session = await getToken({ req, secret: process.env.JWT_SECRET });
-  console.log("session ::", session);
-  console.log("req.nextUrl.pathname", req.nextUrl.pathname);
+  // console.log("session ::", session);
+  // console.log("req.nextUrl.pathname", req.nextUrl.pathname);
 
   const pathname = req.nextUrl.pathname;
 

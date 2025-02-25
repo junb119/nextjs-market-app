@@ -18,14 +18,14 @@ const Pagination = ({ page, totalItems, perPage }: PaginationProps) => {
   const NextPage = Math.min(page + 1, totalPages);
   const prevPage = Math.max(page - 1, firstPage);
   const arr = new Array(totalPages + 2);
-  console.log("getPageItem", getPageItem);
-  console.log("totalPages", totalPages);
+  // console.log("getPageItem", getPageItem);
+  // console.log("totalPages", totalPages);
   return (
     <div className="flex items-center justify-center gap-2 mt-4">
       {/* Item {fromItem} - {toItem} */}
       {[...arr].map((_, i) => {
         const { page, disabled, current } = getPageItem(i);
-        console.log("page,disabled, current", page, disabled, current);
+        // console.log("page,disabled, current", page, disabled, current);
         if (page === "previous") {
           return <PaginationLink page={prevPage} disabled={disabled} key={i}>{"<"}</PaginationLink>;
         }

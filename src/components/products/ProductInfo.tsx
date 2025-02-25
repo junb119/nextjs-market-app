@@ -21,7 +21,7 @@ const ProductInfo = ({
   createdAt,
   description,
 }: ProductInfoProps) => {
-  console.log("@@@@@image@@@@@", user?.image);
+  // console.log("@@@@@image@@@@@", user?.image);
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">

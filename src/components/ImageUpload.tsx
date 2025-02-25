@@ -8,7 +8,7 @@ interface ImageUploadProps {
 }
 const ImageUpload = ({ onChange, value }: ImageUploadProps) => {
   const handleUpload = (result: any) => {
-    console.log("Upload Result:", result);
+    // console.log("Upload Result:", result);
     onChange(result.info.secure_url);
   };
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;

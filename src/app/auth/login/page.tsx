@@ -22,9 +22,9 @@ const LoginPage = () => {
     setIsLoading(true);
     try {
       const data = await signIn("credentials", body);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     } finally {
       setIsLoading(false);
     }

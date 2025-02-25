@@ -8,8 +8,8 @@ export async function POST(request: Request) {
     return NextResponse.error();
   }
   const body = await request.json();
-  console.log("📌 Received data:", body);
-  console.log("👤 Current User:", currentUser);
+  // console.log("📌 Received data:", body);
+  // console.log("👤 Current User:", currentUser);
 
   const { title, description, imageSrc, category, latitude, longitude, price } =
     body;
