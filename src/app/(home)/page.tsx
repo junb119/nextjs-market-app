@@ -13,7 +13,7 @@ interface HomeProps {
 }
 export default async function Home({ searchParams }: HomeProps) {
   const page = searchParams?.page;
-  // console.log("page@@@@@@@@@@", page);
+  console.log("page@@@@@@@@@@", page);
   const pageNum = typeof page === "string" ? Number(page) : 1;
   console.log("pageNum", pageNum);
   const products = await getProducts(searchParams);
