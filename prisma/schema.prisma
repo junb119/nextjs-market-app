@@ -12,85 +12,112 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String  @map("user_id")
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String? @db.Text
-  access_token       String? @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.Text
-  session_state      String?
- 
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@unique([provider, providerAccountId])
   @@map("accounts")
 }
- 
+
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique @map("session_token")
   userId       String   @map("user_id")
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@map("sessions")
 }
+
 enum UserType {
   User
   Admin
 }
- 
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  hashedPassword String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
-  userType UserType @default(User)
-  Products Product[]
-  
-  favoriteIds String[]
-  
-  @@map("users")
 
-} 
- 
+model User {
+  id             String    @id @default(cuid())
+  name           String?
+  hashedPassword String?
+  email          String?   @unique
+  emailVerified  DateTime? @map("email_verified")
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  userType    UserType  @default(User)
+  favoriteIds String[]
+  Products    Product[]
+
+  conversations    Conversation[]
+  sendMessages     Message[]      @relation("sender")
+  receivedMessages Message[]      @relation("receiver")
+
+  @@map("users")
+}
+
 model VerificationToken {
   identifier String
   token      String
   expires    DateTime
- 
+
   @@unique([identifier, token])
   @@map("verification_tokens")
 }
 
 model Product {
-  id String @id @default(cuid())
-  title String
+  id          String   @id @default(cuid())
+  title       String
   description String
-  imageSrc String
-  category String
-  userId String
-  price Int
-  latitude Float
-  longitude Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  imageSrc    String
+  category    String
+  userId      String
+  price       Int
+  latitude    Float
+  longitude   Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  user User @relation(fields: [userId] , references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("products")
+}
 
+model Conversation {
+  id         String    @id @default(cuid())
+  name       String?
+  senderId   String
+  receiverId String
+  users      User[]
+  messages   Message[]
+  cratedAt   DateTime  @default(now())
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  cratedAt       DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  text           String?
+  image          String?
+  sender         User         @relation(name: "sender", fields: [senderId], references: [id])
+  senderId       String
+  receiver       User         @relation(name: "receiver", fields: [receiverId], references: [id])
+  receiverId     String
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversationId String
 }
