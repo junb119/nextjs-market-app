@@ -4,6 +4,6 @@ export type TUserWithChat = User & { conversations: TConversation[] };
 
 export type TConversation = {
   id : string;
-  message: Message[]
+  messages: Message[]
   users: User[]
 }
