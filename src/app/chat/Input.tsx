@@ -37,14 +37,11 @@ const Input = ({ receiverId, currentUserId }: InputProps) => {
       <input
         className="w-full text-base outline-none"
         type="text"
-        placeholder="메시지를 입력햊쉐요"
+        placeholder="메시지를 입력해주세요."
         value={message}
         onChange={(e) => setMessage(e.target.value)}
       />
-      <div
-        onClick={chooseImage}
-        className="text-2xl text-gray-200 cursor-pointer"
-      >
+      <div className="text-2xl text-gray-200 cursor-pointer">
         <IoImageOutline />
       </div>
       <button
