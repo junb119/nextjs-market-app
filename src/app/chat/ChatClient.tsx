@@ -1,6 +1,7 @@
 "use client";
 import { User } from "@prisma/client";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 interface ChatClientProps {
   currentUser?: User | null;
 }
@@ -11,6 +12,10 @@ const ChatClient = ({ currentUser }: ChatClientProps) => {
     receiverImage: "",
   });
   const [layout, setLayout] = useState(false);
+  useEffect(() => {
+    axios.get(`/api/chat`).then((res) => console.log(res));
+  }, []);
+
   return (
     <main>
       <div className="grid grid-cols-[1fr] md:grid-cols-[300px_1fr]">

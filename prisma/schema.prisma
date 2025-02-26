@@ -105,12 +105,12 @@ model Conversation {
   receiverId String
   users      User[]
   messages   Message[]
-  cratedAt   DateTime  @default(now())
+  createdAt   DateTime  @default(now())
 }
 
 model Message {
   id             String       @id @default(cuid())
-  cratedAt       DateTime     @default(now())
+  createdAt       DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
   text           String?
   image          String?
