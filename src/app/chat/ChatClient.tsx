@@ -5,6 +5,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import Contacts from "./Contacts";
+import Chat from "./Chat";
 interface ChatClientProps {
   currentUser?: User | null;
 }
@@ -50,7 +51,9 @@ const ChatClient = ({ currentUser }: ChatClientProps) => {
         {/* md 보다 클 때는 둘다 보여야 함  */}
         {/* md보다 작고 layout이 false 일 때는 chat 안보임  */}
         <section className={`md:flex ${!layout && "hidden"}`}>
-          Chat Component
+          <Chat currentUser={currentUserWithMessage}
+            receiver={receiver} 
+            setLayout={setLayout}/>
         </section>
       </div>
     </main>
