@@ -1,15 +1,33 @@
 "use client";
 import axios from "axios";
+import { url } from "inspector";
 import React, { FormEvent, useState } from "react";
 import { IoImageOutline } from "react-icons/io5";
 import { RiSendPlaneLine } from "react-icons/ri";
+import useSWRMutation from "swr/mutation";
 
 interface InputProps {
   receiverId: string;
   currentUserId: string;
 }
+
+const sendRequest = (
+  url: string,
+  {
+    arg,
+  }: {
+    arg: { text: string; image: string; receiverId: string; senderId: string };
+  }
+) => {
+  return fetch(url, { method: "POST", body: JSON.stringify(arg) }).then((res) =>
+    res.json()
+  );
+};
 const Input = ({ receiverId, currentUserId }: InputProps) => {
   const [message, setMessage] = useState("");
+
+  const { trigger } = useSWRMutation("/api/chat", sendRequest);
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -17,12 +35,18 @@ const Input = ({ receiverId, currentUserId }: InputProps) => {
 
     if (message || imgUrl) {
       try {
-        await axios.post("/api/chat", {
+        trigger({
           text: message,
           image: imgUrl,
           receiverId: receiverId,
           senderId: currentUserId,
         });
+        // await axios.post("/api/chat", {
+        //   text: message,
+        //   image: imgUrl,
+        //   receiverId: receiverId,
+        //   senderId: currentUserId,
+        // });
       } catch (error) {
         console.error(error);
       }
