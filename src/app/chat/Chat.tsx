@@ -1,8 +1,9 @@
 import { TConversation, TUserWithChat } from "@/types";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Input from "./Input";
 import { User } from "@prisma/client";
 import ChatHeader from "./ChatHeader";
+import Message from "./Message";
 
 interface ChatProps {
   receiver: {
@@ -14,6 +15,15 @@ interface ChatProps {
   setLayout: (layout: boolean) => void;
 }
 const Chat = ({ currentUser, receiver, setLayout }: ChatProps) => {
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef?.current?.scrollIntoView({ behavior: "smooth" });
+  };
+  useEffect(() => {
+    scrollToBottom();
+  });
+
   const conversation: TConversation | undefined =
     currentUser?.conversations.find((conversation: TConversation) =>
       conversation.users.find((user: User) => user.id === receiver.receiverId)
@@ -35,7 +45,22 @@ const Chat = ({ currentUser, receiver, setLayout }: ChatProps) => {
         />
       </div>
       <div className="flex flex-col gap-8 p-4 overflow-auto h-[calc(100vh_-_60px-70px_-_80px)]">
-        {/* Chat Message */}
+        {conversation &&
+          conversation.messages.map((message) => {
+            return (
+              <Message
+                key={message.id}
+                isSender={message.senderId === currentUser.id}
+                messageText={message.text}
+                messageImage={message.image}
+                receiverName={receiver.receiverName}
+                receiverImage={receiver.receiverImage}
+                senderImage={currentUser?.image}
+                time={message.createdAt}
+              />
+            );
+          })}
+        <div ref={messagesEndRef} />
       </div>
       <div className="flex items-center p-3">
         <Input
