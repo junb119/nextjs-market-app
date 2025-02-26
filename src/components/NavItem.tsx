@@ -7,7 +7,7 @@ interface NavItemProps {
   mobile?: boolean;
   currentUser?: User | null;
 }
-const NavItem = ({ mobile ,currentUser}: NavItemProps) => {
+const NavItem = ({ mobile, currentUser }: NavItemProps) => {
   return (
     <ul
       className={`text-md justify-center flex gap-4 w-full items-center ${
@@ -19,6 +19,9 @@ const NavItem = ({ mobile ,currentUser}: NavItemProps) => {
       </li>
       <li className="py-2 text-center border-b-4 cursor-pointer">
         <Link href="/user">User</Link>
+      </li>
+      <li className="py-2 text-center border-b-4 cursor-pointer">
+        <Link href="/chat">Chat</Link>
       </li>
       {currentUser ? (
         <li className="py-2 text-center border-b-4 cursor-pointer">

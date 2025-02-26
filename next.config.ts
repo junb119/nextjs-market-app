@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
         hostname: "placehold.co",
       },
     ],
+    domains: ["res.cloudinary.com", "placehold.co"], // 🔥 추가
   },
 };
 
